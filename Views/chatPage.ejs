@@ -4,14 +4,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <body>
-    <div class="w3-container w3-red">
-        <h1>My Car</h1>
-    </div>
-    <div class="w3-container w3-red">
-        <p>A car is a wheeled, self-powered motor vehicle used for transportation.</p>
-    </div>
-    <div class="w3-container w3-red">
-        <p>My footer information</p>
-    </div>
+    <body>
+        <ul id="messages"></ul>
+      
+          <form class="input-container" id="form">
+            <input type="text" id="input" placeholder="Type message" />
+            <input type="submit" value="Send" />
+          </form>
+        </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+          var socket = io();
+        var form = document.getElementById('form');
+        var input = document.getElementById('input');
+        var messages = document.getElementById("messages")
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          if (input.value) {
+            socket.emit('chatMessage', input.value);
+            input.value = '';
+          }
+        });
+        socket.on("getMessages",(data)=>{
+          console.log(data)
+           var item = document.createElement('li');
+          item.textContent = data;
+          messages.appendChild(item);
+          window.scrollTo(0, document.body.scrollHeight);
+        })
+        
+        </script>
+      </body>
 </body>
 </html>
